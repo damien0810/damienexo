@@ -5,5 +5,7 @@ const reader = readline.createInterface({
   output: process.stdout,
 });
 
-const listeAction = (reader) => {};
+const listeAction = (reader) => {
+    
+};
 console.log("listeAction");
