@@ -1,73 +1,66 @@
 const readline = require("readline");
 
-const clear = ()=>console.log("\x1B[2]\x1b[0f");
 const reader = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
+  input: process.stdin,
+  output: process.stdout,
 });
+console.log("Bonjour ShiFuMi");
 
-const moves ={
-rock: [
-    "    ________        ",
-    "---'   _ ,  |       ",
-    "      (__(__)       ",
-    "      (_____)       ",
-    "      (____)        ",
-    "---.__(___)         ",
-  ],
+function ask(question, callback) {
+  reader.question(`${question}\n>`, callback);
+}
+const generateIAChoice = (min, max) => Math.round(Math.random() * (max - min) + min);
+const choiceOfIA = generateIAChoice(1, 3);
+const moves = {
+  rock: [
+    "    ________        ",
+    "---'   _ ,  |       ",
+    "      (__(__)       ",
+    "      (_____)       ",
+    "      (____)        ",
+    "---.__(___)         ",
+  ],
+  paper: [
+    "      _______       ",
+    "----'    ____)____  ",
+    "            _______)",
+    "            _______)",
+    "           _______) ",
+    "----.__________)    ",
+  ],
+  scissors: [
+    "    ____           ",
+    "---'    |________  ",
+    "     (__)________) ",
+    "        _________) ",
+    "      (____)       ",
+    "---.__(___)        ",
+  ],
+};
+const reverseLine = (line) => {
+  const changedLine = line
+    .split("")
+    .map((char) => {
+      if (char == ")") {
+        return "(";
+      } else if (char == "(") {
+        return ")";
+      }
+      return char;
+    })
+    .join("");
+  return changedLine.split("").reverse().join("");
+};
 
-paper :[
-    "      _______       ",
-    "----'    ____)____  ",
-    "            _______)",
-    "            _______)",
-    "           _______) ",
-    "----.__________)    ",
-  ],
-
-scissors :[
-    "    ____           ",
-    "---'    |________  ",
-    "     (__)________) ",
-    "        _________) ",
-    "      (____)       ",
-    "---.__(___)        ",
-  ],
-
-clear();
-console.log("Good Game!");
-  Object.keys(moves).forEach((moveName, index) => {
-      console.log(`${index + 1} - ${moveName}`);
-  });
-
-  const reverseLine = (line) => {
-      const changedLine = line
-      .split("")
-      .map((char) => {
-          if (char === ")") {
-              return "(";
-          } else if (char === "(") {
-              return char;
-        })
-        .join("");
-        return changedline.split("").reverse().join("");
-    };
-
-
-    reader.question("Select a move \n>", (playerMove)=> {
-      const index = parseInt(playMove - 1);
-      const move = Object.keys (moves)[index];
-      const playerSymbol = moves[move];
-
-     console.log(playerSymbol.join("\n"));
-
-      const aiIndex = Math.floor(Math.random() * 3);
-      const aiMove = Object.keys(moves)[aiIndex];
-      const aiSymbol = moves[aiMove];
-
-      console.log(playerSymbol.join("\n"));
-
-
-
-  reader.close();
-});
+function shiFuMi() {
+  ask("comment activer shifumi", (reponseutilisateur) => {
+    if (reponseutilisateur == "je sais pas") {
+      console.log(reverseLine(moves.rock));
+      reader.close();
+    } else {
+      console.log("j'ai pas compris");
+      reader.close();
+    }
+  });
+}
+shiFuMi();
